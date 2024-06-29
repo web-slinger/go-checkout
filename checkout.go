@@ -1,11 +1,15 @@
 package main
 
 // Checkout contains the methods to scan and get total price
-type Checkout struct{}
+type Checkout struct {
+	pricingModel PricingModel // pricingModel contains a map of SKU to price scheme
+}
 
 // NewCheckout returns an instance of Checkout
-func NewCheckout() *Checkout {
-	return &Checkout{}
+func NewCheckout(pricingModel PricingModel) *Checkout {
+	return &Checkout{
+		pricingModel: pricingModel,
+	}
 }
 
 // Scan adds an item to the checkout using the SKU, if there's an issue returns an error

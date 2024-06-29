@@ -93,7 +93,8 @@ func TestGetTotalPrice(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			checkout := NewCheckout()
+			pricingModel := GetPricingModel()
+			checkout := NewCheckout(pricingModel)
 
 			for i := range tc.SKUs {
 				err := checkout.Scan(tc.SKUs[i])
@@ -148,8 +149,8 @@ func TestScan(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-
-			checkout := NewCheckout()
+			pricingModel := GetPricingModel()
+			checkout := NewCheckout(pricingModel)
 
 			for i := range tc.SKUs {
 				err := checkout.Scan(tc.SKUs[i])
