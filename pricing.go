@@ -1,4 +1,4 @@
-package main
+package checkout
 
 // PriceScheme contains a SKU including price and an optional special price
 type PriceScheme struct {
