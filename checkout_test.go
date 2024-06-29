@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetTotalPrice(t *testing.T) {
@@ -87,6 +88,20 @@ func TestGetTotalPrice(t *testing.T) {
 			expErr:   nil,
 		},
 
+		// multi-priced SKUs with more than special price quantity
+		{
+			name:     "5 x A",
+			SKUs:     []string{"A", "A", "A", "A", "A"},
+			expPrice: 230,
+			expErr:   nil,
+		},
+		{
+			name:     "3 x B",
+			SKUs:     []string{"B", "B", "B"},
+			expPrice: 75,
+			expErr:   nil,
+		},
+
 		// mix SKUs
 		{
 			name:     "A + B + C + D cost 95",
@@ -106,17 +121,13 @@ func TestGetTotalPrice(t *testing.T) {
 			for i := range tc.SKUs {
 				err := checkout.Scan(tc.SKUs[i])
 				if err != nil {
-					t.Fatalf("error when scanning SKU %s, err: %v", tc.SKUs[i], err)
+					require.NoError(t, err, "when scanning SKU '%s'", tc.SKUs[i])
 				}
 			}
 
 			price, err := checkout.GetTotalPrice()
-			if err != tc.expErr {
-				t.Errorf("expected err '%v', got '%v'", tc.expErr, err)
-			}
-			if price != tc.expPrice {
-				t.Errorf("expected price '%v', got '%v'", tc.expPrice, price)
-			}
+			assert.Equal(t, tc.expErr, err)
+			assert.Equal(t, tc.expPrice, price)
 		})
 	}
 }
