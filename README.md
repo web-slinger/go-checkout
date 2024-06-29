@@ -15,12 +15,22 @@ cd go-checkout
 
 ## Use this project
 
+```bash
+go get github.com/web-slinger/go-checkout
+```
+
+```go
+import (
+    gocheckout "github.com/web-slinger/go-checkout"
+)
+```
+
 ```go
 // get pricing model
-priceScheme := GetPricingModel()
+priceScheme := gocheckout.GetPricingModel()
 
 // initialise checkout
-checkout := NewCheckout(priceScheme)
+checkout := gocheckout.NewCheckout(priceScheme)
 
 // scan your items
 err := checkout.Scan("A")
@@ -34,7 +44,7 @@ if err != nil {
     panic(err)
 }
 
-fmt.Printf("total price '%d', totalPrice)
+fmt.Printf("total price '%d'", totalPrice)
 ```
 
 ## Testing this project
