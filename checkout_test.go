@@ -55,6 +55,12 @@ func TestGetTotalPrice(t *testing.T) {
 
 		// non multi-priced SKUs
 		{
+			name:     "2 x A cost 100",
+			SKUs:     []string{"A", "A"},
+			expPrice: 100,
+			expErr:   nil,
+		},
+		{
 			name:     "2 x C cost 40",
 			SKUs:     []string{"C", "C"},
 			expPrice: 40,

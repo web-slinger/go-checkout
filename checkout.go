@@ -37,12 +37,12 @@ func (c *Checkout) Scan(SKU string) (err error) {
 
 // GetTotalPrice returns the total price after summing up items in checkout, if there's an issue returns an error and 0 price
 func (c *Checkout) GetTotalPrice() (totalPrice int, err error) {
-	for sku := range c.items {
+	for sku, quantity := range c.items {
 		item, ok := c.pricingModel[sku]
 		if !ok {
 			return 0, errNotFoundSKU(sku)
 		}
-		totalPrice += item.Price
+		totalPrice += item.Price * quantity
 	}
 	return totalPrice, nil
 }
