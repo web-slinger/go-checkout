@@ -22,5 +22,10 @@ func GetPricingModel() PricingModel {
 	// this could be built up via 2 lists
 	// list of prices keyed by SKU
 	// list of special prices keyed by SKU
-	return PricingModel{}
+	return PricingModel{
+		"A": {},
+		"B": {},
+		"C": {},
+		"D": {},
+	}
 }
