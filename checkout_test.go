@@ -1,8 +1,9 @@
 package main
 
 import (
-	"errors"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetTotalPrice(t *testing.T) {
@@ -143,7 +144,7 @@ func TestScan(t *testing.T) {
 		{
 			name:   "Z SKU not exists has error",
 			SKUs:   []string{"Z"},
-			expErr: errors.New("some error"),
+			expErr: errNotFoundSKU("Z"),
 		},
 	}
 
@@ -154,9 +155,7 @@ func TestScan(t *testing.T) {
 
 			for i := range tc.SKUs {
 				err := checkout.Scan(tc.SKUs[i])
-				if err != tc.expErr {
-					t.Fatalf("expected error '%v', got '%v'", tc.expErr, err)
-				}
+				assert.Equal(t, tc.expErr, err)
 			}
 		})
 	}
