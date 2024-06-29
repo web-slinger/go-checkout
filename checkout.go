@@ -4,13 +4,14 @@ import "fmt"
 
 // Checkout contains the methods to scan and get total price
 type Checkout struct {
-	items        []string     // items is a list of SKUs that have been successfully scanned
-	pricingModel PricingModel // pricingModel contains a map of SKU to price scheme
+	items        map[string]int // items is a map of SKU and quantity
+	pricingModel PricingModel   // pricingModel contains a map of SKU to price scheme
 }
 
 // NewCheckout returns an instance of Checkout
 func NewCheckout(pricingModel PricingModel) *Checkout {
 	return &Checkout{
+		items:        map[string]int{},
 		pricingModel: pricingModel,
 	}
 }
@@ -22,17 +23,24 @@ func (c *Checkout) Scan(SKU string) (err error) {
 		return errNotFoundSKU(SKU)
 	}
 
-	c.items = append(c.items, SKU)
+	_, found := c.items[SKU]
+	if !found {
+		// init key in map
+		c.items[SKU] = 0
+	}
+
+	// add quantity for SKU
+	c.items[SKU]++
 
 	return nil
 }
 
 // GetTotalPrice returns the total price after summing up items in checkout, if there's an issue returns an error and 0 price
 func (c *Checkout) GetTotalPrice() (totalPrice int, err error) {
-	for i := range c.items {
-		item, ok := c.pricingModel[c.items[i]]
+	for sku := range c.items {
+		item, ok := c.pricingModel[sku]
 		if !ok {
-			return 0, errNotFoundSKU(c.items[i])
+			return 0, errNotFoundSKU(sku)
 		}
 		totalPrice += item.Price
 	}
