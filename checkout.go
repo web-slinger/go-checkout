@@ -42,7 +42,7 @@ func (c *Checkout) GetTotalPrice() (totalPrice int, err error) {
 		if !ok {
 			return 0, errNotFoundSKU(sku)
 		}
-		totalPrice += item.Price * quantity
+		totalPrice += item.CalculateSpecialPrice(quantity)
 	}
 	return totalPrice, nil
 }
