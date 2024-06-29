@@ -34,7 +34,7 @@ func TestGetTotalPrice(t *testing.T) {
 		},
 		{
 			name:     "D cost 15",
-			SKUs:     []string{"A"},
+			SKUs:     []string{"D"},
 			expPrice: 15,
 			expErr:   nil,
 		},
