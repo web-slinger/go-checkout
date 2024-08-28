@@ -4,7 +4,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/golang.org/x/example.svg)](https://pkg.go.dev/github.com/web-slinger/go-checkout)
 
-This repository contains an application that demonstrates common functionality that of a checkout using standard libraries.
+This repository contains a package that demonstrates common functionality of a supermarket checkout using standard libraries.
 
 ## Clone the project
 
@@ -67,11 +67,15 @@ For some tests of your application you may want to mock certain functions, the `
 
 ```go
 type ICheckout interface {
-    Scan(SKU string)(err error)
-    GetTotalPrice()(totalPrice int, err error)
+    Scan(SKU string) (err error)
+    GetTotalPrice() (totalPrice int, err error)
 }
 ```
 
 ## Building this project
 
-This project is to be used as a library/component to be part of an application, so cannot be built
+This project is to be used as a package to be part of an application.
+
+```
+go build -o bin/checkout
+```
